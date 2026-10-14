@@ -71,7 +71,8 @@ def platforms(p):
             browser="chromium",
             context=dict(viewport={"width": 1920, "height": 1080}, user_agent=DESKTOP_UA),
         ),
-        "iOS (Safari)": dict(browser="webkit", context=dict(**iphone)),
+        # iPhone эмулируется в Chromium (экран, user-agent Safari, тач) — вдвое меньше памяти, чем WebKit
+        "iOS (Safari)": dict(browser="chromium", context=dict(**iphone)),
     }
 
 
@@ -91,6 +92,8 @@ def check(page, query):
     stale = 0
     deadline = time.time() + 120  # не дольше 2 минут на одну проверку
     while len(grid) < DEPTH and stale < 12 and time.time() < deadline:
+        if "showcaptcha" in page.url:
+            return None, None, None, len(grid), "капча"
         before = len(grid)
         for c in page.evaluate(COLLECT_JS):
             if c["href"] in seen:

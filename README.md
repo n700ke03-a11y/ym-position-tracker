@@ -55,7 +55,7 @@
 sudo apt update && sudo apt install -y python3-venv git
 git clone https://github.com/<ваш-логин>/ym-position-tracker.git && cd ym-position-tracker
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-sudo .venv/bin/python -m playwright install-deps chromium webkit && .venv/bin/python -m playwright install chromium webkit
+sudo .venv/bin/python -m playwright install-deps chromium && .venv/bin/python -m playwright install chromium
 # положите ключ в credentials.json рядом со скриптом, затем:
 crontab -e
 # и добавьте строку:
